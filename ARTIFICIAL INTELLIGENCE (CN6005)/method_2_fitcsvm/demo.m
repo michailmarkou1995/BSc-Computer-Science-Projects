@@ -2,28 +2,24 @@ clear; close all; clc;
 
 %% preparing dataset
 
-load fisheriris
-%load wdbc.mat
+load wdbc.mat
 
-%species = t;
-%meas = x;
-species_num = grp2idx(species);
+targets_num = t;
 %%
 
 % binary classification 형태로 만들기 위해 100개만...
-X = randn(100,10); %10 or 569
-%%
-X(:,[1,3,5,7]) = meas(1:100,:); % 1, 3, 5, 7 번 feature가 분류에 유용한 feature일 것임. %100 or 30
-%%
-y = species_num(1:100);
+%X = zeros(569,30);
+X = x; % 569 samples 30 features
+y = targets_num(1:569);
 
 %%
-rand_num = randperm(size(X,1));
-X_train = X(rand_num(1:round(0.8*length(rand_num))),:);
-y_train = y(rand_num(1:round(0.8*length(rand_num))),:);
+% 80:20
+rand_num = randperm(size(X,1)); % 569 samples
+X_train = X(rand_num(1:round(0.8*length(rand_num))),:); % 80
+y_train = y(rand_num(1:round(0.8*length(rand_num))),:); % target
 
-X_test = X(rand_num(round(0.8*length(rand_num))+1:end),:);
-y_test = y(rand_num(round(0.8*length(rand_num))+1:end),:);
+X_test = X(rand_num(round(0.8*length(rand_num))+1:end),:); % 20 ... 81:end-to-100 of samples
+y_test = y(rand_num(round(0.8*length(rand_num))+1:end),:); % target
 %% CV partition
 
 c = cvpartition(y_train,'k',5);
@@ -45,7 +41,7 @@ Md1 = fitcsvm(X_train_w_best_feature,y_train,'KernelFunction','rbf','OptimizeHyp
 
 %% Final test with test set
 X_test_w_best_feature = X_test(:,fs);
-test_accuracy_for_iter = sum((predict(Md1,X_test_w_best_feature) == y_test))/length(y_test)*100
+test_accuracy_for_iter = sum((predict(Md1,X_test_w_best_feature) == y_test))/length(y_test)*569 %100
 
 %% hyperplane 확인
 
@@ -73,4 +69,4 @@ pos = find(pred_mesh == 2);
 h2 = plot(dd(pos,1), dd(pos,2),'s','color',bluecolor,'Markersize',5,'MarkerEdgeColor',bluecolor,'MarkerFaceColor',bluecolor);
 uistack(h1,'bottom');
 uistack(h2,'bottom');
-legend([hgscatter;h_sv],{'setosa','versicolor','support vectors'})
+legend([hgscatter;h_sv],{'Benign','Malignant','support vectors'})

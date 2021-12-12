@@ -24,7 +24,7 @@ for pat=1:P
     end
 end
 
-% fitsvm does not read String Labels sto Numeric Mapping instead
+% output mapping numeric 1, -1
 t = zeros(1,P); % targets
 for pat=1:P
     if char(Data{2}(pat)) == 'M'
