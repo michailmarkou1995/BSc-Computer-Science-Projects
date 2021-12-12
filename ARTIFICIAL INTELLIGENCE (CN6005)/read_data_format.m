@@ -17,10 +17,10 @@ n = length(Data);       % number of features + target
 n = n-2;                % ignore first two attributes (ID, target)
 P = length(Data{1});    % number of patterns
 %% prepare Data sets
-p = zeros(n,P);
+x = zeros(n,P);
 for pat=1:P
     for i=1:n
-        p(i,pat) = double(Data{i+2}(pat));
+        x(i,pat) = double(Data{i+2}(pat));
     end
 end
 
@@ -34,7 +34,7 @@ for pat=1:P
     end
 end
 
-save('wdbc.mat', 'p', 't');
+save('wdbc.mat', 'x', 't');
 %end
 elseif (strcmp(IDparts,'xlsx'))
     %[~,fid] = xlsread(ID, 1, 'A2:AF1000');
