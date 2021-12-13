@@ -30,14 +30,14 @@ y_test = y(rand_num(round(0.8*length(rand_num))+1:end),:); % target
 %% CV partition
 
 c = cvpartition(y_train,'k',5);
-%% feature selection
+%% feature selection show only 2 features out of features.size
 
 opts = statset('display','iter');
 classf = @(train_data, train_labels, test_data, test_labels)...
     sum(predict(fitcsvm(train_data, train_labels,'KernelFunction','rbf'), test_data) ~= test_labels);
 
 [fs, history] = sequentialfs(classf, X_train, y_train, 'cv', c, 'options', opts,'nfeatures',2);
-%% Best hyperparameter
+%% Best hyperparameter MSE - weight(x) kernelScale - bias(y) BoxConstraint
 
 X_train_w_best_feature = X_train(:,fs);
 
@@ -62,8 +62,9 @@ X_label_matrix='';
 X_flag_exit = 0;
 Y_label_matrix='';
 Y_flag_exit = 0;
+searchMappingColumns0=0;
+searchMappingRowsY0=0;
 searchMappingColumns1=0;
-searchMappingColumns2=0;
 % map data from X_train_w_best_feature to textFeatures
 % X_train_w_best_feature{1}(1); only if there is cell like json array
 % X_train_w_best_feature{2}(1);
@@ -71,9 +72,10 @@ for searchMappingColumns=1:30
     for searchMappingRowsY=1:569
         %disp(X_train_w_best_feature(1:1,1:1));
         %disp(X_train_w_best_feature(1:1,2:2));
-        if (x(searchMappingRowsY) == X_train_w_best_feature(1:1,1:1) & Y_flag_exit == 0) % row from 1 to 1 and column from 1 to 1
+        if (x(searchMappingRowsY:searchMappingRowsY,searchMappingColumns:searchMappingColumns) == X_train_w_best_feature(1:1,1:1) && Y_flag_exit == 0) % row from 1 to 1 and column from 1 to 1
             Y_label_matrix = textFeatures(searchMappingColumns);
             searchMappingColumns0=searchMappingColumns;
+            searchMappingRowsY0 = searchMappingRowsY;
             Y_flag_exit = 1;
             %disp(Y_label_matrix);
             %break;
@@ -81,9 +83,16 @@ for searchMappingColumns=1:30
     end
     for searchMappingRowsX=1:569
         %disp(X_train_w_best_feature(1:2));
-        if (x(searchMappingRowsX) == X_train_w_best_feature(1:1,2:2) & X_flag_exit == 0) % row from 1 to 1 and column from 2 to 2
+        if (x(searchMappingRowsX:searchMappingRowsX,searchMappingColumns:searchMappingColumns) == X_train_w_best_feature(1:1,2:2) && X_flag_exit == 0) % row from 1 to 1 and column from 2 to 2
             % do not label different response feature but same value resulting in same axes name, after first iteration of for Y
-            if (searchMappingColumns0 ~= searchMappingColumns)
+            % we want to search same row record with same column feature of same patient
+            % or to make sure that a record has a number but this number
+            % presents multilpe times inside the data set we do a compare of not same column to
+            % check again but with any of the other columns left to check
+            % (e.g., same number in multiple columns but second
+            % feature/column appears in another column not same record, different row yet
+            % different record)
+            if (searchMappingColumns0 ~= searchMappingColumns || searchMappingRowsX == searchMappingRowsY0)%searchMappingColumns0 ~= searchMappingColumns && searchMappingRowsX == searchMappingRowsY0
                 X_label_matrix = textFeatures(searchMappingColumns);
                 X_flag_exit = 1;
                 %disp(X_label_matrix);
