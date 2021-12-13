@@ -1,3 +1,7 @@
+% Popular Machine Learning Models for Classification
+% Support Vector Machine (SVM) category
+% https://www.mathworks.com/discovery/machine-learning-models.html
+
 % 1 preparing dataset, dividing it train/test set
 % 2 preparing validation set out of training set (kfold cv)
 % 3 Feature selection
