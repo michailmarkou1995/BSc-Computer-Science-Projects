@@ -55,7 +55,7 @@ Md1 = fitcsvm(X_train_w_best_feature,y_train,'KernelFunction','rbf','OptimizeHyp
 X_test_w_best_feature = X_test(:,fs);
 test_accuracy_for_iter = sum((predict(Md1,X_test_w_best_feature) == y_test))/length(y_test)*569; %100
 
-%% hyperplane 확인
+%% hyperplane validation draw output
 
 figure;
 hgscatter = gscatter(X_train_w_best_feature(:,1),X_train_w_best_feature(:,2),y_train); % features values X_train_w_best_feature 1 col and col 2 compare
