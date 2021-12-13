@@ -2,7 +2,7 @@
 % Support Vector Machine (SVM) category
 % https://www.mathworks.com/discovery/machine-learning-models.html
 
-% 1 preparing dataset, dividing it train/test set
+% 1 preparing dataset, dividing it train/test set (features (columns) samples/records/id's/patients(rows) responses (cols + rows), targets/predictors/classes for division and classification)
 % 2 preparing validation set out of training set (kfold cv)
 % 3 Feature selection
 % 4 fiding best parameters (hyper)
@@ -18,9 +18,9 @@ load wdbc.mat
 targets_num = t; % predictors
 %%
 
-% binary classification 569 to make into shape...
+% binary classification 569 samples to make into shape...
 %X = zeros(569,30);
-X = x; % 569 samples (rows) 30 features/response (columns)
+X = x; % 569 samples (rows) 30 features (columns)
 y = targets_num(1:569);
 
 %%
@@ -41,7 +41,8 @@ classf = @(train_data, train_labels, test_data, test_labels)...
     sum(predict(fitcsvm(train_data, train_labels,'KernelFunction','rbf'), test_data) ~= test_labels);
 
 [fs, history] = sequentialfs(classf, X_train, y_train, 'cv', c, 'options', opts,'nfeatures',2);
-%% Best hyperparameter MSE - weight(x) kernelScale - bias(y) BoxConstraint
+%% Best seperation hyperparameter MSE - weight(x) kernelScale - bias(y) BoxConstraint
+% https://www.mathworks.com/help/stats/support-vector-machines-for-binary-classification.html
 
 X_train_w_best_feature = X_train(:,fs);
 

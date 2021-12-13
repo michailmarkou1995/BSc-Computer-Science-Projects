@@ -13,7 +13,7 @@ if (strcmp(IDparts,'csv'))
 fh = fopen(ID,'r');
 Data = textscan(fh, ['%d,%[^,],',repmat('%f,',1,29),'%f\n'], 'HeaderLines',1);
 fclose(fh);
-n = length(Data);       % number of features + target
+n = length(Data);       % number of features(response) + target/predictors
 n = n-2;                % ignore first two attributes (ID, target)
 P = length(Data{1});    % number of patterns
 %% prepare Data sets
