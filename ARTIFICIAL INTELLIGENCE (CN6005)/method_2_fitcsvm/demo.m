@@ -75,17 +75,18 @@ for searchMappingColumns=1:30
             Y_label_matrix = textFeatures(searchMappingColumns);
             searchMappingColumns0=searchMappingColumns;
             Y_flag_exit = 1;
-            disp(Y_label_matrix);
+            %disp(Y_label_matrix);
             %break;
         end
     end
     for searchMappingRowsX=1:569
         %disp(X_train_w_best_feature(1:2));
         if (x(searchMappingRowsX) == X_train_w_best_feature(1:1,2:2) & X_flag_exit == 0) % row from 1 to 1 and column from 2 to 2
+            % do not label different response feature but same value resulting in same axes name, after first iteration of for Y
             if (searchMappingColumns0 ~= searchMappingColumns)
                 X_label_matrix = textFeatures(searchMappingColumns);
                 X_flag_exit = 1;
-                disp(X_label_matrix);
+                %disp(X_label_matrix);
             %else
                 %continue;
             end
