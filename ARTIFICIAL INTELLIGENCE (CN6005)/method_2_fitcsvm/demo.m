@@ -1,15 +1,22 @@
+% 1 preparing dataset, dividing it train/test set
+% 2 preparing validation set out of training set (kfold cv)
+% 3 Feature selection
+% 4 fiding best parameters (hyper)
+% 5 test the model with test set
+% 6 visualize hyperplane
+
 clear; close all; clc;
 
 %% preparing dataset
 
 load wdbc.mat
 
-targets_num = t;
+targets_num = t; % predictors
 %%
 
-% binary classification 형태로 만들기 위해 100개만...
+% binary classification 569 to make into shape...
 %X = zeros(569,30);
-X = x; % 569 samples 30 features
+X = x; % 569 samples (rows) 30 features/response (columns)
 y = targets_num(1:569);
 
 %%
@@ -36,22 +43,64 @@ X_train_w_best_feature = X_train(:,fs);
 
 Md1 = fitcsvm(X_train_w_best_feature,y_train,'KernelFunction','rbf','OptimizeHyperparameters','auto',...
       'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
-      'expected-improvement-plus','ShowPlots',true)); % Bayes' Optimization 사용.
+      'expected-improvement-plus','ShowPlots',true)); % Bayes' Optimization use.
 
 
 %% Final test with test set
 X_test_w_best_feature = X_test(:,fs);
-test_accuracy_for_iter = sum((predict(Md1,X_test_w_best_feature) == y_test))/length(y_test)*569 %100
+test_accuracy_for_iter = sum((predict(Md1,X_test_w_best_feature) == y_test))/length(y_test)*569; %100
 
 %% hyperplane 확인
 
 figure;
-hgscatter = gscatter(X_train_w_best_feature(:,1),X_train_w_best_feature(:,2),y_train);
+hgscatter = gscatter(X_train_w_best_feature(:,1),X_train_w_best_feature(:,2),y_train); % features values X_train_w_best_feature 1 col and col 2 compare
 hold on;
 h_sv=plot(Md1.SupportVectors(:,1),Md1.SupportVectors(:,2),'ko','markersize',8);
+gscatter_malignant_group = hgscatter(2);
+gscatter_malignant_group.Color = 'r';
+X_label_matrix='';
+X_flag_exit = 0;
+Y_label_matrix='';
+Y_flag_exit = 0;
+searchMappingColumns1=0;
+searchMappingColumns2=0;
+% map data from X_train_w_best_feature to textFeatures
+% X_train_w_best_feature{1}(1); only if there is cell like json array
+% X_train_w_best_feature{2}(1);
+for searchMappingColumns=1:30
+    for searchMappingRowsY=1:569
+        %disp(X_train_w_best_feature(1:1,1:1));
+        %disp(X_train_w_best_feature(1:1,2:2));
+        if (x(searchMappingRowsY) == X_train_w_best_feature(1:1,1:1) & Y_flag_exit == 0) % row from 1 to 1 and column from 1 to 1
+            Y_label_matrix = textFeatures(searchMappingColumns);
+            searchMappingColumns0=searchMappingColumns;
+            Y_flag_exit = 1;
+            disp(Y_label_matrix);
+            %break;
+        end
+    end
+    for searchMappingRowsX=1:569
+        %disp(X_train_w_best_feature(1:2));
+        if (x(searchMappingRowsX) == X_train_w_best_feature(1:1,2:2) & X_flag_exit == 0) % row from 1 to 1 and column from 2 to 2
+            if (searchMappingColumns0 ~= searchMappingColumns)
+                X_label_matrix = textFeatures(searchMappingColumns);
+                X_flag_exit = 1;
+                disp(X_label_matrix);
+            %else
+                %continue;
+            end
+        end
+    end
+    if (Y_flag_exit == 1 && X_flag_exit == 1)
+        break;
+    end
+end
+gscatter_malignant_group.Parent.XLabel.String = X_label_matrix;
+gscatter_malignant_group.Parent.YLabel.String = Y_label_matrix;
+gscatter_benign_group = hgscatter(1);
+gscatter_benign_group.Color = 'b';
 
-
-% test set의 data를 하나 하나씩 넣어보자.
+% test set of data put them one by one.
 
 gscatter(X_test_w_best_feature(:,1),X_test_w_best_feature(:,2),y_test,'rb','xx')
 
@@ -70,3 +119,4 @@ h2 = plot(dd(pos,1), dd(pos,2),'s','color',bluecolor,'Markersize',5,'MarkerEdgeC
 uistack(h1,'bottom');
 uistack(h2,'bottom');
 legend([hgscatter;h_sv],{'Benign','Malignant','support vectors'})
+hold off
