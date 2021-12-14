@@ -2,14 +2,14 @@
 % Support Vector Machine (SVM) category
 % https://www.mathworks.com/discovery/machine-learning-models.html
 
-% 1 preparing dataset, dividing it train/test set (features (columns) samples/records/id's/patients(rows) responses (cols + rows), targets/predictors/classes for division and classification)
+% 1 preparing dataset, dividing it train/test set - (features (columns) samples/records/id's/patients(rows) responses (cols + rows), targets/predictors/classes/labels/outputs for division and classification)
 % 2 preparing validation set out of training set (kfold cv)
 % 3 Feature selection
 % 4 fiding best parameters (hyper)
 % 5 test the model with test set
 % 6 visualize hyperplane
 
-clear; close all; clc;
+clear; close all; clc; % if you want to "re-train" comment out this line
 
 %% preparing dataset
 
