@@ -2,7 +2,7 @@
 % Support Vector Machine (SVM) category
 % https://www.mathworks.com/discovery/machine-learning-models.html
 
-% 1 preparing dataset, dividing it train/test set - (features (columns) samples/records/id's/patients(rows) responses (cols + rows), targets/predictors/classes/labels/outputs for division and classification)
+% 1 preparing dataset, dividing it train/test set - (features (columns) samples/records/id's/patients(rows) predictors (cols + rows), targets/responses/classes/labels/outputs for division and classification)
 % 2 preparing validation set out of training set (kfold cv)
 % 3 Feature selection
 % 4 fiding best parameters (hyper)
@@ -15,7 +15,7 @@ clear; close all; clc; % if you want to "re-train" comment out this line
 
 load wdbc.mat
 
-targets_num = t; % predictors
+targets_num = t; % responses
 %%
 
 % binary classification 569 samples to make into shape...
@@ -89,7 +89,7 @@ for searchMappingColumns=1:30
     for searchMappingRowsX=1:569
         %disp(X_train_w_best_feature(1:2));
         if (x(searchMappingRowsX:searchMappingRowsX,searchMappingColumns:searchMappingColumns) == X_train_w_best_feature(1:1,2:2) && X_flag_exit == 0) % row from 1 to 1 and column from 2 to 2
-            % do not label different response feature but same value resulting in same axes name, after first iteration of for Y
+            % do not label different predictor feature but same value resulting in same axes name, after first iteration of for Y
             % we want to search same row record with same column feature of same patient
             % or to make sure that a record has a number but this number
             % presents multilpe times inside the data set we do a compare of not same column to
