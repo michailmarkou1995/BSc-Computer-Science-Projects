@@ -25,32 +25,38 @@ for pat=1:P
 end
 
 % row results if need to transpose to column use t = t'; or t = t.';
-t = zeros(size(x,1),2); 
-%t = zeros(1,P); % targets
+%t = zeros(size(x,1),2); 
+t = zeros(1,P); % targets
 for i=1:P
     if char(Data{2}(i)) == 'M'
-        %t(pat) = 1; % Malignant
-        t(i,:) = [1 0];
+        t(i) = 1; % Malignant
+        %t(i,:) = [1 0];
     else
-        %t(pat) = -1; %Benign
-        t(i,:) = [0 1];
+        t(i) = 0; %Benign cant use -1
+        %t(i,:) = [0 1];
     end
 end
-%t = t';
+t = t'; % this if uncommented line 28,32,35 and 29,33,36 commented
 %save('wdbc.mat', 'x', 't', 'textFeatures');
 save('wdbc.mat', 'x', 't');
 % load ('wdbc.mat');
 
 
 hidden_layers_neurons = [5];
-training_function = 'trainscg';
-net = patternnet(hidden_layers_neurons);
+training_function = 'trainrp'; %trainscg
+net = patternnet(hidden_layers_neurons); %feedforwardnet
+%net = setwb(net,rand(55,1));
+%net = setwb(net,1);
+%net.IW{1,1} %50
+%net.b{1} % 5
+%net.b = [2 1; 1];
+%view(net);
 %net.divideFcn = 'dividerand';
 net.trainFcn = training_function;
 %net.trainParam.goal = 1e-4;
 %net.trainParam.epochs = 1500;
 net.trainParam.show = 1;
-%net.performFcn = 'mse';
+net.performFcn = 'mse';
 
 net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
@@ -72,5 +78,26 @@ x = x(1:569,1:10);
 outputs = net(x);
 %end
 
-figure, plotperform(tr);
-figure, plotconfusion(t, outputs);
+%figure, plotperform(tr);
+%figure, plotconfusion(t, outputs);
+[c,cm] = confusion(t,outputs);
+fprintf('Percentage Correct Classification   : %f%%\n', 100*(1-c));
+fprintf('Percentage Incorrect Classification : %f%%\n', 100*c);
+%plotroc(t,outputs);
+
+mse=0;
+Nepochs = tr.epoch(end); % Total epochs iteration of net train
+N = length(x); % Proccessed Data Length
+for i_mse_total = 1:N-1
+    mse(i_mse_total) = mean((t(i_mse_total)-x(i_mse_total)).^2) % mse = ti - xi
+end
+Tmse = length(mse);
+full_mse=0;
+for i_epoch = 1:Nepochs
+    for ii = 1:Tmse
+        full_mse = full_mse + mse(ii);
+    end
+    full_mse = full_mse/Tmse+1;
+end
+%full_mse = full_mse/Tmse+1;
+%plot(abs(mse));
