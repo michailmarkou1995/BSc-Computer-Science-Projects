@@ -71,7 +71,7 @@ x = x(1:569,1:10);
 %% Average after 100 trains
 outputs = net(x); % target expected - output that got from test data
 %myGhostFigure = figure("Visible",false); % kane edw subplot? se figure opws sto libsvm? gia oxi draw?
-confmatrix = figure, plotconfusion(t, outputs);
+%confmatrix = figure, plotconfusion(t, outputs);
 %close(findall(groot,'Type','figure'))
 shoi='';
 shoi_n=0;
@@ -80,13 +80,13 @@ shoi_n=0;
 %shoi_n = str2double(shoi); %shoi_n = str2num(['uint8(',shoi,')']);
 
 for i=1:50
-%confmatrix = plotconfusion(t, outputs);
+confmatrix = figure, plotconfusion(t, outputs);
 outputs = net(x);
 shoi = confmatrix.CurrentAxes.Children(4).String;
 shoi = regexprep(shoi,'[^?:\.A-Za-z1-9]','');
 shoi_n = shoi_n + str2double(shoi);
-if (i~=50)
-    %close(findall(groot,'Type','figure'))
+if (i~=100)
+    close(findall(groot,'Type','figure'))
 end
 end
 shoi_n = shoi_n/100;
