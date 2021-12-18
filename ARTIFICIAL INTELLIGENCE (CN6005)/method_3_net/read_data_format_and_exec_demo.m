@@ -68,36 +68,40 @@ x = x(1:569,1:10);
  t=t';
 [net,tr] = train(net, x, t);
 
-%% Average after 100 trains
-outputs = net(x); % target expected - output that got from test data
-%myGhostFigure = figure("Visible",false); % kane edw subplot? se figure opws sto libsvm? gia oxi draw?
-confmatrix = figure, plotconfusion(t, outputs);
+%% Confusion Matrix
+
+%outputs = net(x); % target expected - output that got from test data
+outputs = zeros(length(x(:,:)),length(x(1,:)));%zeros(1,size(x(1:1,1:1)));
+pcorrect=0;
+perror=0;
+%myGhostFigure = figure("Visible",false);
+%confmatrix = figure, plotconfusion(t, outputs);
 %close(findall(groot,'Type','figure'))
-shoi='';
-shoi_n=0;
 %shoi = confmatrix.CurrentAxes.Children(4).String;
-%shoi = regexprep(shoi,'[^?:\.A-Za-z1-9]',''); % keep only numbers with dot but not 0
+%shoi = regexprep(shoi,'[^?:\.A-Za-z1-9]',''); % keep only numbers with dot but not 0 with .
 %shoi_n = str2double(shoi); %shoi_n = str2num(['uint8(',shoi,')']);
 
-for i=1:50
-%confmatrix = plotconfusion(t, outputs);
-outputs = net(x);
-shoi = confmatrix.CurrentAxes.Children(4).String;
-shoi = regexprep(shoi,'[^?:\.A-Za-z1-9]','');
-shoi_n = shoi_n + str2double(shoi);
-if (i~=50)
-    %close(findall(groot,'Type','figure'))
-end
-end
-shoi_n = shoi_n/100;
-
-%% figures
+% once total percentage of Confusion Matrix correctness
 %figure, plotperform(tr);
 %figure, plotconfusion(t, outputs);
-[c,cm] = confusion(t,outputs);
-fprintf('Percentage Correct Classification   : %f%%\n', 100*(1-c));
-fprintf('Percentage Incorrect Classification : %f%%\n', 100*c);
+%[c,cm] = confusion(t,outputs);
+%fprintf('Percentage Correct Classification   : %f%%\n', 100*(1-c));
+%fprintf('Percentage Incorrect Classification : %f%%\n', 100*c);
 %plotroc(t,outputs);
+
+% Average re-train confusion
+for i=1:100
+    outputs = net(x);
+    [c,cm,ind,per] = confusion(t,outputs);
+    pcorrect = pcorrect + (100*(1-c));
+    perror = perror + (100*c);
+    if (i==100)
+        pcorrect = pcorrect / 100;
+        perror = perror / 100;
+        fprintf('Average Percentage Correct Classification   : %f%%\n', pcorrect);
+        fprintf('Average Percentage Incorrect Classification : %f%%\n', perror);
+    end
+end
 
 %% CALCULATE MSE
 Nepochs = tr.epoch(end); % Total epochs iteration of net train
