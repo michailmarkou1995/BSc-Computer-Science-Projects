@@ -3,7 +3,7 @@
 % https://www.mathworks.com/discovery/machine-learning-models.html
 
 % 1 preparing dataset, dividing it train/test set - (features (columns) samples/records/id's/inputs/classes(rows) predictors (cols + rows), targets/responses/classes/labels/outputs for division and classification)
-% 2 preparing validation set out of training set (kfold cv)
+% 2 preparing validation set out of training set (kfold cv (cross validation))
 % 3 Feature selection
 % 4 fiding best parameters (hyper)
 % 5 test the model with test set
@@ -24,7 +24,7 @@ X = x; % 569 samples (rows) 30 features (columns)
 y = targets_num(1:569);
 
 %%
-% 80:20
+% 80:20 Data categorization
 rand_num = randperm(size(X,1)); % 569 samples
 X_train = X(rand_num(1:round(0.8*length(rand_num))),:); % 80
 y_train = y(rand_num(1:round(0.8*length(rand_num))),:); % target
@@ -34,7 +34,8 @@ y_test = y(rand_num(round(0.8*length(rand_num))+1:end),:); % target
 %% CV partition
 
 c = cvpartition(y_train,'k',5);
-%% feature selection show only 2 features out of features.size
+%% feature selection show only 2 random features out of features.size
+% below we display this categories in plot output by mapping textFeature name headerline from csv to columns of the predicted output graph
 
 opts = statset('display','iter');
 classf = @(train_data, train_labels, test_data, test_labels)...

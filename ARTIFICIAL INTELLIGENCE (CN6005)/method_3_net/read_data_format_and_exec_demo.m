@@ -3,7 +3,7 @@
 clear; clc; close all;
 
 fid = fopen('data.csv','r');
-Data = textscan(fid, ['%d,%[^,],',repmat('%f,',1,29),'%f\n'], 'HeaderLines',1);
+Data = textscan(fid, ['%d,%[^,],',repmat('%f,',1,29),'%f\n'], 'HeaderLines',1); % first col is decimal second is string then the rest 29 is features and throw/delete headeline first row of csv text
 fclose(fid);
 
 n = length(Data);       % number of features + target
@@ -28,7 +28,7 @@ for i=1:P
         %t(i,:) = [0 1];
     end
 end
-t = t'; % or t = t.';
+t = t'; % or t = t.'; % transpose in order for proper dimensions inputs & targets to process later
 
 %% storage
 %save('wdbc.mat', 'x', 't');
@@ -36,6 +36,7 @@ t = t'; % or t = t.';
 
 %% Prepare Neural Network
 
+% every iteration new training function tested numerous times and getting average results of the mse
 for test_various_training_functions_average_results = 1:3
     hidden_layers_neurons = [10];
     if (test_various_training_functions_average_results == 1)
@@ -48,7 +49,7 @@ for test_various_training_functions_average_results = 1:3
         training_function = 'traingdx';
     end
     
-    net = patternnet(hidden_layers_neurons); %feedforwardnet
+    net = patternnet(hidden_layers_neurons); %feedforwardnet for fitting not classification
     %net = setwb(net,rand(55,1));
     %net = setwb(net,1);
     %net.IW{1,1}
@@ -57,27 +58,30 @@ for test_various_training_functions_average_results = 1:3
     %view(net);
     %net.divideFcn = 'dividerand';
     net.trainFcn = training_function;
+    net.layers{1}.transferFcn = 'logsig'; % tansig
     %net.trainParam.goal = 1e-2;
     net.trainParam.epochs = 1500;
     net.trainParam.show = 1;
-    net.performFcn = 'mse'; % crossentropy
+    net.performFcn = 'mse'; % or crossentropy
 
     net.divideParam.trainRatio = 70/100;
     net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
 
-    net.trainParam.max_fail = 10;
+    net.trainParam.max_fail = 10; % when validation should kick in by stopping the process of the neural network
 
     % traingdx only
-    if (strcmp(training_function, 'traingdx'))     
-        net.trainParam.lr = 0.1; %0.1 0.4;
-        net.trainParam.mc = 0.4; %0.4 0.9;
+    if (strcmp(training_function, 'traingdx'))  
+        % In setting a learning rate, there is a trade-off between the rate of convergence and overshooting.
+        net.trainParam.lr = 0.1; %0.1 0.4; % Corresponds how fast will move (step size at each iteration) towards goal (minimum of loss function)
+        net.trainParam.mc = 0.4; %0.4 0.9; % Corresponds how strong (control adaptation parameter) will be the influence of the direction (training gain) that is heading towards (affects error convergence)
     end
 
     net = init(net);
-
+    
+    % transpose only on first run the matrix cells
     if (test_various_training_functions_average_results == 1)
-         x = x(1:569,1:10);
+         x = x(1:569,1:10); % Feature selection only the first 10 columns of 569 samples
          x = x';
          t=t';
     end
@@ -86,13 +90,13 @@ for test_various_training_functions_average_results = 1:3
 
     %% Confusion Matrix
 
-    outputs = zeros(length(x(:,:)),length(x(1,:)));
+    outputs= zeros(length(x(:,:)),length(x(1,:))); % fill with 569x569
     pcorrect=0;
     perror=0;
 
     % Average re-train confusion
     mse=0.0;
-    for i=1:15
+    for i=1:15 % 15 times re-train
         [net,tr] = train(net, x, t); % re-train
         outputs = net(x);
         Nepochs = tr.epoch(end); % Total epochs iteration of net train
@@ -104,8 +108,8 @@ for test_various_training_functions_average_results = 1:3
             mse(1) = mse(1)/N;
         end
         [c,cm,ind,per] = confusion(t,outputs);
-        pcorrect = pcorrect + (100*(1-c));
-        perror = perror + (100*c);
+        pcorrect = pcorrect + (100*(1-c)); % numeric representation of Correct Classification
+        perror = perror + (100*c); % numeric representation of Incorrect Classification
         if (i==15)
             pcorrect = pcorrect / 15;
             perror = perror / 15;

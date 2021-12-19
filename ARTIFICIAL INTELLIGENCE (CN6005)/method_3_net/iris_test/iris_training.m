@@ -81,5 +81,3 @@ figure, plotconfusion(t, outputs);  % έτσι εμφανίζει μόνο το 
                                     % confusion matrix. Για τα επιμέρους
                                     % ούτως ή άλλως τα εμφανίζει το 
                                     % training παράθυρο του MATLAB
-                                    
-
