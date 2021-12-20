@@ -40,13 +40,13 @@ t = t'; % or t = t.'; % transpose in order for proper dimensions inputs & target
 for test_various_training_functions_average_results = 1:3
     hidden_layers_neurons = [10];
     if (test_various_training_functions_average_results == 1)
-        training_function = 'trainscg';
+        training_function = 'trainscg'; % trainscg
     end
     if (test_various_training_functions_average_results == 2)
-        training_function = 'trainrp';
+        training_function = 'trainrp'; % trainrp
     end
     if (test_various_training_functions_average_results == 3)
-        training_function = 'traingdx';
+        training_function = 'traingdx'; % traingdx
     end
     
     net = patternnet(hidden_layers_neurons); %feedforwardnet for fitting not classification
