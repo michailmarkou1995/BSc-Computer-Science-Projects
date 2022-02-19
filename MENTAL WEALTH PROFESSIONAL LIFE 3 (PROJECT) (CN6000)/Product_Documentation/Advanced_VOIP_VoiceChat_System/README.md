@@ -10,7 +10,7 @@ Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Bl
 ```
 
 ```
-3 Systems Seperate will also be available as a product. (Business(Product-Engineer-Market))
+3 Systems Seperate will also be available as a product. (Business(Product &check; -Engineer-Market))
 
 1) Simple VOIP Voice Chat (team/global/positional-proximity)
 2) Walkie Talkie VOIP Voice Chat
