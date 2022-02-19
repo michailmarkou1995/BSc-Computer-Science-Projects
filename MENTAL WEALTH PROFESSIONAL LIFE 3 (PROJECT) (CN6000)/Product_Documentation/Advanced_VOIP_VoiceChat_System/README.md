@@ -1,6 +1,9 @@
 # Advanced_VOIP_VoiceChat_System
 Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Blueprint System in Unreal Engine<br/>
 
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `This Product will be available on Unreal MarketPlace`<br/>
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) LINK = [Unreal Engine Marketplace](https://www.unrealengine.com/marketplace/en-US/store) - Currently still unavailable
+
 ```
 **NO Sound middleware depended e.g., FMOD, Wwise**
 **100% Blueprints NO C++ required**
@@ -9,10 +12,10 @@ Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Bl
 ```
 3 Systems Seperate will also be available as a product. (Business(Product-Engineer-Market))
 
-1) Simple VOIP Voice Chat (team/global/positional-proximity) 5.99
-2) Walkie Talkie VOIP Voice Chat 10.99
-3) Cellphone VOIP Voice Chat 10.99
-4) And this Advanced VOIP Voice Chat System 30.99
+1) Simple VOIP Voice Chat (team/global/positional-proximity)
+2) Walkie Talkie VOIP Voice Chat
+3) Cellphone VOIP Voice Chat
+4) And this Advanced VOIP Voice Chat System
 ```
 
 # Main Features:<br/>
