@@ -12,10 +12,10 @@ Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Bl
 ```
 3 Systems Seperate will also be available as a product. (Business(Product-Engineer-Market))
 
-1) Simple VOIP Voice Chat (team/global/positional-proximity) 5.99
-2) Walkie Talkie VOIP Voice Chat 10.99
-3) Cellphone VOIP Voice Chat 10.99
-4) And this Advanced VOIP Voice Chat System 30.99
+1) Simple VOIP Voice Chat (team/global/positional-proximity)
+2) Walkie Talkie VOIP Voice Chat
+3) Cellphone VOIP Voice Chat
+4) And this Advanced VOIP Voice Chat System
 ```
 
 # Main Features:<br/>
