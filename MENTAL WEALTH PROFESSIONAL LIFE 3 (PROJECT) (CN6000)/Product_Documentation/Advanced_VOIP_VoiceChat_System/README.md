@@ -1,6 +1,8 @@
 # Advanced_VOIP_VoiceChat_System
 Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Blueprint System in Unreal Engine<br/>
 
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `#f03c15`
+
 ```
 **NO Sound middleware depended e.g., FMOD, Wwise**
 **100% Blueprints NO C++ required**
