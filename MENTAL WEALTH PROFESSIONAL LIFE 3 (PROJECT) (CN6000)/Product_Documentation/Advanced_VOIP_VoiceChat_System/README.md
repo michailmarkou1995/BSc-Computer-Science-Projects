@@ -22,7 +22,8 @@ Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Bl
 
 # Main Features:<br/>
 ```
-Supports up to 4 players but can be extended to your needs whatever you like 
+• Works on Both Server-Host and Clients
+• Supports up to 4 players but can be extended to your needs whatever you like 
 (most horror Multiplayer Games have 4 survivors with 1 player as the killer (5 total) or NPC instead of actual PvP or PvE settings)
 ```
 • Proximity/Positional Distance Voice Chat<br/>
