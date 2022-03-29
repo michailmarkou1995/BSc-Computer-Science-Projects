@@ -2,7 +2,7 @@
 Advanced Audio/Voice Signal Spectrum/Band Routing for Multiplayer Video Games Blueprint System in Unreal Engine<br/>
 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `This Product will be available on Unreal Engine MarketPlace`<br/>
-![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) [Unreal Engine Marketplace](https://www.unrealengine.com/marketplace/en-US/store) - Currently still unavailable &check;<br/>
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) [Unreal Engine Marketplace](https://www.unrealengine.com/marketplace/en-US/product/advanced-voip-voice-chat-system) - available &check;<br/>
 ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) [Youtube Showcase Presentation](https://www.youtube.com/watch?v=2QcsIlXXc1M&list=PLiTVVRdEvpm6GQxFKgO5JrUTAwUQM93N8) - Available &check;<br/>
 ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) [Discord Community Support](https://discord.gg/wHvVmuBF3z) - Available &check;<br/>
 
