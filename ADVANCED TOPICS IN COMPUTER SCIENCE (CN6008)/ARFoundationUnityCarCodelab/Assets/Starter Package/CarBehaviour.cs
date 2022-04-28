@@ -46,6 +46,7 @@ public class CarBehaviour : MonoBehaviour
         if (Package != null)
         {
             Destroy(other.gameObject);
+            //Score.scoreCount++;
         }
     }
 }

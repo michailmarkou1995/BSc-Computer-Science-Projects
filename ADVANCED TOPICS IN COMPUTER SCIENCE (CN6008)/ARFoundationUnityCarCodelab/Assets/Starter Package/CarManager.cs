@@ -24,22 +24,51 @@ using UnityEngine.XR.ARFoundation;
  */
 public class CarManager : MonoBehaviour
 {
-    public GameObject CarPrefab;
+    public GameObject CarPrefab, CarPrefab2;
+    GameObject CarPrefab1Obj, CarPrefab2Obj;
     public ReticleBehaviour Reticle;
     public DrivingSurfaceManager DrivingSurfaceManager;
 
-    public CarBehaviour Car;
+    public CarBehaviour Car, Car2;
 
     private void Update()
     {
+#if UNITY_EDITOR
+        //GameObject Obj;
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            CarPrefab1Obj = GameObject.Instantiate(CarPrefab); 
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            CarPrefab1Obj.SetActive(false);
+            CarPrefab2Obj = GameObject.Instantiate(CarPrefab2);
+        }
+#endif
+
         if (Car == null && WasTapped() && Reticle.CurrentPlane != null)
         {
             // Spawn our car at the reticle location.
-            var obj = GameObject.Instantiate(CarPrefab);
-            Car = obj.GetComponent<CarBehaviour>();
+            //var obj = GameObject.Instantiate(CarPrefab);
+            CarPrefab1Obj = GameObject.Instantiate(CarPrefab);
+            Car = CarPrefab1Obj.GetComponent<CarBehaviour>();
             Car.Reticle = Reticle;
             Car.transform.position = Reticle.transform.position;
+
+            CarPrefab2Obj = GameObject.Instantiate(CarPrefab2);
+            CarPrefab2Obj.SetActive(false);
+
             DrivingSurfaceManager.LockPlane(Reticle.CurrentPlane);
+        }
+
+        if (Score.scoreCount >= 2)
+        {
+            CarPrefab1Obj.SetActive(false);
+            Destroy(CarPrefab1Obj);
+            CarPrefab2Obj.SetActive(true);
+            Car = CarPrefab2Obj.GetComponent<CarBehaviour>();
+            Car.Reticle = Reticle;
+            Car.transform.position = Reticle.transform.position;
         }
     }
 

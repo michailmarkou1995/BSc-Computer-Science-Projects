@@ -28,9 +28,12 @@ public class LightEstimation : MonoBehaviour
 
     private void Start()
     {
-        ARCameraManager.frameReceived += FrameReceived;
-
         Light = GetComponent<Light>();
+    }
+
+    private void Update()
+    {
+        ARCameraManager.frameReceived += FrameReceived;
     }
 
     private void FrameReceived(ARCameraFrameEventArgs args)

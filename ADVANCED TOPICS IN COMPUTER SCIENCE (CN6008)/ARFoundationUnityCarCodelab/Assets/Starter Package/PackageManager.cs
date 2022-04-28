@@ -67,6 +67,7 @@ public class PackageManager : MonoBehaviour
             if (Package == null)
             {
                 SpawnPackage(lockedPlane);
+                Score.scoreCount++;
             }
 
             var packagePosition = Package.gameObject.transform.position;
