@@ -26,6 +26,7 @@ public class CarManager : MonoBehaviour
 {
     public GameObject CarPrefab, CarPrefab2;
     GameObject CarPrefab1Obj, CarPrefab2Obj;
+    bool doOnce;
     public ReticleBehaviour Reticle;
     public DrivingSurfaceManager DrivingSurfaceManager;
 
@@ -61,14 +62,15 @@ public class CarManager : MonoBehaviour
             DrivingSurfaceManager.LockPlane(Reticle.CurrentPlane);
         }
 
-        if (Score.scoreCount >= 2)
+        if (Score.scoreCount >= 2 && !doOnce)
         {
             CarPrefab1Obj.SetActive(false);
-            Destroy(CarPrefab1Obj);
+            //Destroy(CarPrefab1Obj);
             CarPrefab2Obj.SetActive(true);
             Car = CarPrefab2Obj.GetComponent<CarBehaviour>();
             Car.Reticle = Reticle;
             Car.transform.position = Reticle.transform.position;
+            doOnce = true;
         }
     }
 
