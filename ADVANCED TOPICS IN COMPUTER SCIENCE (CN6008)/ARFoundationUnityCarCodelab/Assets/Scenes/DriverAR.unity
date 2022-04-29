@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CarPrefab: {fileID: 6378763645007927171, guid: e5b76e4e2953b40899e6eb98c85b5f32,
     type: 3}
-  CarPrefab2: {fileID: 1289082859757472508, guid: 3f1f2339772c04b4c816b5bbf620b5b1,
+  CarPrefab2: {fileID: 101713013236946646, guid: 45b8655b975d7774ab113252693aa3fc,
     type: 3}
   Reticle: {fileID: 780716209}
   DrivingSurfaceManager: {fileID: 782628376}

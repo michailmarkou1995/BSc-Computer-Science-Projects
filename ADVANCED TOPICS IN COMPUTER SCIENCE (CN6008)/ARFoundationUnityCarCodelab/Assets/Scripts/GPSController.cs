@@ -30,7 +30,7 @@ public class GPSController : MonoBehaviour
         // No permission handling needed in Editor
 #endif
 
-        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation) || !Permission.HasUserAuthorizedPermission(Permission.CoarseLocation))
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
             Permission.RequestUserPermission(Permission.CoarseLocation);
             Permission.RequestUserPermission(Permission.FineLocation);
@@ -42,14 +42,14 @@ public class GPSController : MonoBehaviour
             message = "Location Services Not Enabled.";
             Debug.LogFormat("Android and Location not enabled");
             //yield break;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
         }
 
         // Start service before querying location
         Input.location.Start(5, 0); // 5 meters accuracy, displacement
 
         // Wait until service initializes
-        int maxWait = 10;
+        int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
             yield return new WaitForSeconds(1);

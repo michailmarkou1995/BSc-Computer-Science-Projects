@@ -62,10 +62,10 @@ public class CarManager : MonoBehaviour
             DrivingSurfaceManager.LockPlane(Reticle.CurrentPlane);
         }
 
-        if (Score.scoreCount >= 2 && !doOnce)
+        if (Score.scoreCount >= 5 && !doOnce)
         {
             CarPrefab1Obj.SetActive(false);
-            //Destroy(CarPrefab1Obj);
+            Destroy(CarPrefab1Obj); // Double points?
             CarPrefab2Obj.SetActive(true);
             Car = CarPrefab2Obj.GetComponent<CarBehaviour>();
             Car.Reticle = Reticle;
