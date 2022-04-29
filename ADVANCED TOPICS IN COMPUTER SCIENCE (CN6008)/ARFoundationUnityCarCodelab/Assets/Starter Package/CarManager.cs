@@ -62,7 +62,7 @@ public class CarManager : MonoBehaviour
             DrivingSurfaceManager.LockPlane(Reticle.CurrentPlane);
         }
 
-        if (Score.scoreCount >= 5 && !doOnce)
+        if ((Score.scoreCount >= 5 || Input.location.lastData.longitude >= 180.0) && !doOnce)
         {
             CarPrefab1Obj.SetActive(false);
             Destroy(CarPrefab1Obj); // Double points?
