@@ -1,7 +1,7 @@
 DriveAR Codelab for Unity AR Foundation
 ============
 
-This project contains Prototype code and not Design Patterns
+```This project contains Prototype code and not Design Patterns```
 
 This repository contains sample assets that accompany the [Create an AR game using Unity's AR Foundation Codelab](https://codelabs.developers.google.com/arcore-unity-ar-foundation/).
 
