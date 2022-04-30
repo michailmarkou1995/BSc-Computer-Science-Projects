@@ -12,6 +12,7 @@ public class ConvertDataBaseToMultiPlatform : MonoBehaviour
     public void GenerateConnectionString(string DatabaseName)
     {
 #if UNITY_EDITOR
+        //if (Application.platform != RuntimePlatform.Android) 
         string dbPath = Application.dataPath + "/StreamingAssets/" + DatabaseName;
         //var dbPath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
 #else

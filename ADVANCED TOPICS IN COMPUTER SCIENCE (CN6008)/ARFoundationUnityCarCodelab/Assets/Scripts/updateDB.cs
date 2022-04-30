@@ -14,7 +14,7 @@ public class updateDB : MonoBehaviour
 
     private void Start()
     {
-        //updateDatabase();
+        //updateDatabase(); // for testing uncomment this then input from params exposed in script component propertie inspector view
         readDatabase();
     }
 

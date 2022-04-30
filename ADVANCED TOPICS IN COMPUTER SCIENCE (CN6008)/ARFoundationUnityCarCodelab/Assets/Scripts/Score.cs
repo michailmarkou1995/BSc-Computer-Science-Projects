@@ -8,7 +8,7 @@ public class Score : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI ScoreText = null;
     public TextMeshProUGUI oldScore;
-    public static int scoreCount = -1;
+    public static int scoreCount = -1; // newScoreCount > oldScoreCount
     public static int oldScoreCount;
 
     private void Update()
