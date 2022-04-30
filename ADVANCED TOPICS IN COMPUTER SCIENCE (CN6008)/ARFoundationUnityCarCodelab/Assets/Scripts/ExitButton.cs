@@ -1,39 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class ExitButton : MonoBehaviour
     {
-        [SerializeField]
-        GameObject m_BackButton;
-        public GameObject backButton
-        {
-            get => m_BackButton;
-            set => m_BackButton = value;
-        }
+        public GameObject appMgmt;
 
-        void Start()
+        public void QuitGame()
         {
-            if (Application.CanStreamedLevelBeLoaded("Menu"))
+            // if score bigger then save otherwise do not
+            if (Application.isPlaying)
             {
-                m_BackButton.SetActive(true);
-            }
-        }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                BackButtonPressed();
-            }
-        }
-
-        public void BackButtonPressed()
-        {
-            if (Application.CanStreamedLevelBeLoaded("Menu"))
-            {
-                SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+                if(Score.scoreCount > Score.oldScoreCount)
+                {
+                    appMgmt.GetComponent<updateDB>().updateDatabase("playerData");
+                    Debug.Log("You did new SCORE!!");
+                }
+                Debug.Log("saving");
+                Application.Quit();
             }
         }
     }

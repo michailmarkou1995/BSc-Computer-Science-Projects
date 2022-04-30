@@ -369,13 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932e83b61f4827f4f9d3bdb2f940c46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BackButton: {fileID: 679407262}
---- !u!1 &679407262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7068412918920641391, guid: 27b237f48a30802408ba47f32024cb29,
-    type: 3}
-  m_PrefabInstance: {fileID: 7068412919598618097}
-  m_PrefabAsset: {fileID: 0}
+  appMgmt: {fileID: 1125693313}
 --- !u!1 &713596242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1092,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1125693313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1125693315}
+  - component: {fileID: 1125693314}
+  - component: {fileID: 1125693316}
+  m_Layer: 0
+  m_Name: AppManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1125693314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125693313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24772ffeda39ba4a8d7d6c0d052d3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DataBaseName: playerData
+--- !u!4 &1125693315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125693313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.0407972, y: 0.79122025, z: 2.3749552}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1125693316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125693313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6423d66a2380d5c41acd95161716f9a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dbName: playerData
+  newScore: 0
+  oldScoreText: {fileID: 2081468840}
 --- !u!1 &1285642073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 2081468840}
+  oldScore: {fileID: 1517590073}
 --- !u!1001 &7068412919598618097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1585,7 +1641,7 @@ PrefabInstance:
     - target: {fileID: 7068412918920641361, guid: 27b237f48a30802408ba47f32024cb29,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackButtonPressed
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 7068412918920641361, guid: 27b237f48a30802408ba47f32024cb29,
         type: 3}
