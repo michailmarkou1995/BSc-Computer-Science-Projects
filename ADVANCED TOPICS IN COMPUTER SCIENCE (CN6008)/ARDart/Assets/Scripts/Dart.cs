@@ -33,7 +33,7 @@ public class Dart : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isForceOK)
+        if (isForceOK) //##################### should i use Check force?
         {
             dartFrontCollider.enabled = true;
             StartCoroutine(InitDartDestroyVFX());
@@ -64,10 +64,10 @@ public class Dart : MonoBehaviour
 
     IEnumerator InitDartDestroyVFX()
     {
-        yield return new WaitForSeconds(7f);
-        //if (!isDartHitOnBoard) { 
-            Destroy(gameObject);
-        //}
+        yield return new WaitForSeconds(5f); // if in 7 secs do not hit then destroy it
+        if (!isDartHitOnBoard) {
+        Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
