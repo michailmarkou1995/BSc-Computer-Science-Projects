@@ -15,6 +15,8 @@ public class DartController : MonoBehaviour
     private bool isDartBoardSearched = false;
     private float m_distanceFromDartBoard = 0f;
     public TMP_Text text_distance;
+    private const int DARTMAX = 6;
+    private int dartCounterLimit = 0;
 
     void Start()
     {
@@ -65,12 +67,17 @@ public class DartController : MonoBehaviour
 
     void DartsInit()
     {
+        dartCounterLimit++;
         DartboardObj = GameObject.FindWithTag("dart_board").transform;
         if (DartboardObj)
         {
             isDartBoardSearched = true;
         }
-        StartCoroutine(WaitAndSpawnDart());
+        if (dartCounterLimit != DARTMAX)
+            StartCoroutine(WaitAndSpawnDart());
+        else
+            // call Game Over
+            Debug.Log("End Game");
     }
 
     public IEnumerator WaitAndSpawnDart()
@@ -79,8 +86,8 @@ public class DartController : MonoBehaviour
         DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
         DartTemp.transform.parent = ARCam.transform;
 
-        if(DartTemp.TryGetComponent(out Rigidbody rigid))
-        rb = rigid;
+        if (DartTemp.TryGetComponent(out Rigidbody rigid))
+            rb = rigid;
 
         rb.isKinematic = true;
 

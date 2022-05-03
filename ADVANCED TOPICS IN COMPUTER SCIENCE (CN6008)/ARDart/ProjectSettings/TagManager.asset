@@ -8,6 +8,49 @@ TagManager:
   - dart_board
   - AR Session Origin
   - DartThrowPoint
+  - score_50
+  - score_25
+  - score_20
+  - score_40
+  - score_60
+  - score_2
+  - score_1
+  - score_3
+  - score_36
+  - score_18
+  - score_54
+  - score_8
+  - score_4
+  - score_12
+  - score_13
+  - score_26
+  - score_39
+  - score_6
+  - score_10
+  - score_30
+  - score_15
+  - score_45
+  - score_17
+  - score_34
+  - score_51
+  - score_9
+  - score_19
+  - score_38
+  - score_57
+  - score_7
+  - score_14
+  - score_21
+  - score_16
+  - score_32
+  - score_48
+  - score_24
+  - score_22
+  - score_11
+  - score_33
+  - score_28
+  - score_42
+  - score_27
+  - score_5
   layers:
   - Default
   - TransparentFX
