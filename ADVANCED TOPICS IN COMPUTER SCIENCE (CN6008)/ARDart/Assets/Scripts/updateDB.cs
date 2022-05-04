@@ -9,7 +9,7 @@ using TMPro;
 public class updateDB : MonoBehaviour
 {
     public string dbName;
-    public int newScore;
+    public int newScore; // test variable
     public static updateDB Instance = null;
 
     private void Awake()

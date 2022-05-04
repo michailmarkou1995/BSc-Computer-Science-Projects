@@ -46,7 +46,7 @@ public class GPSController : MonoBehaviour
         }
 
         // Start service before querying location
-        Input.location.Start(5, 0); // 5 meters accuracy, displacement
+        Input.location.Start(); // 5 meters accuracy, displacement
 
         // Wait until service initializes
         int maxWait = 20;
