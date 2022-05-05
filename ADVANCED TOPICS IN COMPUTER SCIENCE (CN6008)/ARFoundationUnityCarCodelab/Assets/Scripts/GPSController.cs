@@ -32,7 +32,7 @@ public class GPSController : MonoBehaviour
 
         if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
-            Permission.RequestUserPermission(Permission.CoarseLocation);
+            //Permission.RequestUserPermission(Permission.CoarseLocation);
             Permission.RequestUserPermission(Permission.FineLocation);
         }
 
