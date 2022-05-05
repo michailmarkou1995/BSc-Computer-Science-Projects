@@ -10,7 +10,10 @@ public class updateDB : MonoBehaviour
 {
     public string dbName;
     public int newScore; // test variable
-    public static updateDB Instance = null;
+    private static updateDB instance = null;
+
+    // can be read by other scripts, but it can only be set from within its own class.
+    public static updateDB Instance { get => instance; private set => instance = value; }
 
     private void Awake()
     {
@@ -20,9 +23,9 @@ public class updateDB : MonoBehaviour
             Instance = this;
         }
         //If an instance already exists, destroy whatever this object is to enforce the singleton.
-        else if (Instance != this)
+        else if (Instance != this) // != null
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy(this)
         }
 
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
@@ -41,7 +44,7 @@ public class updateDB : MonoBehaviour
         IDbCommand dbcmd;
         IDataReader dreader;
 
-        dbconn = (IDbConnection) new SqliteConnection(conn);
+        dbconn = (IDbConnection)new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
         dbcmd = dbconn.CreateCommand();
         string sqlQuery = "SELECT score " + "FROM user";

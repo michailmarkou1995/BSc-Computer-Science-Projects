@@ -842,7 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 1585201990951412, guid: d16dd8da7e4ccbe42b1b4a344a72ecbb,
     type: 3}
-  m_DetectionMode: 2
+  m_DetectionMode: -1
 --- !u!114 &398608239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bea7f37c91bb70429e82597835aa0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DartPrefab: {fileID: 5714692348457409191, guid: c3be68fac9a074c2ea07000474129381,
+  DartPrefab: {fileID: 8139559857253738471, guid: 38846e04a889ea4499da13624c3e244a,
     type: 3}
   DartThrowPoint: {fileID: 1231765493}
   text_distance: {fileID: 185793119}

@@ -51,6 +51,7 @@ TagManager:
   - score_42
   - score_27
   - score_5
+  - dart_axe
   layers:
   - Default
   - TransparentFX

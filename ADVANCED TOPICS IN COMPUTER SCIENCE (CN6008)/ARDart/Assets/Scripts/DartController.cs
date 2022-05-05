@@ -22,6 +22,22 @@ public class DartController : MonoBehaviour
     {
         aRSession = GameObject.FindWithTag("AR Session Origin").GetComponent<ARSessionOrigin>();
         ARCam = aRSession.transform.Find("AR Camera").gameObject;
+
+
+#if UNITY_EDITOR
+        /**
+         * Test code
+         */
+
+        // Test Debug on Run Unity Editor this also executes the Dart rotation script attached to DartTemp
+        //DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, Quaternion.Euler(new Vector3(ARCam.transform.eulerAngles.x, -90, ARCam.transform.eulerAngles.z))); //Quaternion.Euler(new Vector3(45, transform.eulerAngles.y, 0) //Quaternion.Euler(new Vector3(0, -90, 0)) // no tranform.rotation.xyz
+        //DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, Quaternion.Euler(ARCam.transform.localRotation.eulerAngles.x, ARCam.transform.localRotation.eulerAngles.y - 90, ARCam.transform.localRotation.eulerAngles.z));
+        DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
+        DartTemp.transform.parent = ARCam.transform;
+        Debug.Log(Quaternion.Euler(ARCam.transform.localRotation.eulerAngles.x, ARCam.transform.localRotation.eulerAngles.y, ARCam.transform.localRotation.eulerAngles.z));
+        Debug.Log(ARCam.transform.localRotation);
+        Debug.Log(DartTemp.transform.parent);
+#endif
     }
 
     void OnEnable()
@@ -42,7 +58,7 @@ public class DartController : MonoBehaviour
             RaycastHit raycastHit;
             if (Physics.Raycast(raycast, out raycastHit))
             {
-                if (raycastHit.collider.CompareTag("dart"))
+                if (raycastHit.collider.CompareTag("dart") || raycastHit.collider.CompareTag("dart_axe"))
                 {
                     //Disable back touch Collider from dart 
                     raycastHit.collider.enabled = false;
@@ -73,16 +89,30 @@ public class DartController : MonoBehaviour
         {
             isDartBoardSearched = true;
         }
-        if (dartCounterLimit != DARTMAX)
-            StartCoroutine(WaitAndSpawnDart());
-        else
-            // call Game Over
-            Debug.Log("End Game");
+        //if (dartCounterLimit != DARTMAX)
+        StartCoroutine(WaitAndSpawnDart());
+        // else
+        // call Game Over
+        Debug.Log("End Game");
     }
 
     public IEnumerator WaitAndSpawnDart()
     {
         yield return new WaitForSeconds(1f);
+
+        /*        if (DartPrefab.tag == "dart")
+                {
+                    DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
+                    DartTemp.transform.parent = ARCam.transform;
+                }
+                else if (DartPrefab.tag == "dart_axe")
+                {
+                    // because instead of depth z the model is imported from 3d model program as y the depth in local rotation
+                    //DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, Quaternion.Euler(ARCam.transform.localRotation.eulerAngles.x, ARCam.transform.localRotation.eulerAngles.y - 90, ARCam.transform.localRotation.eulerAngles.z));
+                    DartTemp.transform.parent = ARCam.transform;
+                }*/
+
+        // Create Prefab Default Empty and not parent imported 3D model to avoid AR camera Angle + Spawn Rotation headache calculation
         DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
         DartTemp.transform.parent = ARCam.transform;
 

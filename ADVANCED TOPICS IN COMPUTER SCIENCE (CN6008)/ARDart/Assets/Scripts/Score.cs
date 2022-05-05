@@ -11,24 +11,25 @@ public class Score : MonoBehaviour
     private int scoreCount = 0; // newScoreCount > oldScoreCount
     private int oldScoreCount;
 
-    public static Score Instance = null;
+    //private static Score instance = null; // no need when auto property
 
     public int ScoreCount { get => scoreCount; set => scoreCount = value; }
     public int OldScoreCount { get => oldScoreCount; set => oldScoreCount = value; }
     public TextMeshProUGUI NewScoreText { get => newScoreText; set => newScoreText = value; }
 
+    // can be read by other scripts, but it can only be set from within its own class.
+    public static Score Instance { get; private set; } = null; // auto property
+
     private void Awake()
     {
         // If there is not already an instance of SoundManager, set it to this.
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(this);
         }
         //If an instance already exists, destroy whatever this object is to enforce the singleton.
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
+        else
+            Instance = this;
 
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
@@ -40,6 +41,6 @@ public class Score : MonoBehaviour
     }
     private void UpdateScore()
     {
-            newScoreText.text = "New Score: " + ScoreCount.ToString();
+        newScoreText.text = "New Score: " + ScoreCount.ToString();
     }
 }

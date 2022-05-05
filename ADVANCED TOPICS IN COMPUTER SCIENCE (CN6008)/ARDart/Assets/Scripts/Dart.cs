@@ -48,18 +48,38 @@ public class Dart : MonoBehaviour
         //Add Force
         rg.AddForce(dirObj.transform.forward * (12f + 6f) * Time.deltaTime, ForceMode.VelocityChange);
 
-        //Dart ready
-        if (isDartReadyToShoot)
+        if (gameObject.tag == "dart")
         {
-            transform.Rotate(Vector3.forward * Time.deltaTime * 20f);
+            //Dart ready
+            if (isDartReadyToShoot)
+            {
+                transform.Rotate(Vector3.forward * Time.deltaTime * 20f);
+            }
+
+            //Dart rotating
+            if (isDartRotating)
+            {
+                isDartReadyToShoot = false;
+                transform.Rotate(Vector3.forward * Time.deltaTime * 400f);
+            }
+        }
+        else if(gameObject.tag == "dart_axe")
+        {
+            //Dart ready
+            if (isDartReadyToShoot)
+            {
+                // because local is x and not z rotate on right which is forward (parent, top root component gameObj)
+                transform.Rotate(Vector3.right * Time.deltaTime * 50f);
+            }
+
+            //Dart rotating
+            if (isDartRotating)
+            {
+                isDartReadyToShoot = false;
+                transform.Rotate(Vector3.right * Time.deltaTime * 400f);
+            }
         }
 
-        //Dart rotating
-        if (isDartRotating)
-        {
-            isDartReadyToShoot = false;
-            transform.Rotate(Vector3.forward * Time.deltaTime * 400f);
-        }
     }
 
     IEnumerator InitDartDestroyVFX()
