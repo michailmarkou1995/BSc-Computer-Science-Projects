@@ -5,23 +5,24 @@ using UnityEngine.XR.ARFoundation;
 
 public class DartController : MonoBehaviour
 {
-    public GameObject DartPrefab;
+    public GameObject DartPrefab, DartPrefab2;
     public Transform DartThrowPoint;
     ARSessionOrigin aRSession;
     GameObject ARCam;
     Transform DartboardObj;
-    private GameObject DartTemp;
+    private GameObject DartTemp, AxeTemp;
     private Rigidbody rb;
     private bool isDartBoardSearched = false;
     private float m_distanceFromDartBoard = 0f;
-    public TMP_Text text_distance;
-    private const int DARTMAX = 6;
+    public TMP_Text text_distance, dartCounterLeft, endGameText;
+    private const int DARTMAX = 8;
     private int dartCounterLimit = 0;
 
     void Start()
     {
         aRSession = GameObject.FindWithTag("AR Session Origin").GetComponent<ARSessionOrigin>();
         ARCam = aRSession.transform.Find("AR Camera").gameObject;
+        dartCounterLeft.text = DARTMAX.ToString();
 
 
 #if UNITY_EDITOR
@@ -37,6 +38,7 @@ public class DartController : MonoBehaviour
         Debug.Log(Quaternion.Euler(ARCam.transform.localRotation.eulerAngles.x, ARCam.transform.localRotation.eulerAngles.y, ARCam.transform.localRotation.eulerAngles.z));
         Debug.Log(ARCam.transform.localRotation);
         Debug.Log(DartTemp.transform.parent);
+        endGameText.text = "Run Out of Darts Plz Save and Exit";
 #endif
     }
 
@@ -63,9 +65,12 @@ public class DartController : MonoBehaviour
                     //Disable back touch Collider from dart 
                     raycastHit.collider.enabled = false;
                     DartTemp.transform.parent = aRSession.transform;
+                    AxeTemp.transform.parent = aRSession.transform;
 
                     Dart currentDartScript = DartTemp.GetComponent<Dart>();
+                    Dart currentDartScript2 = AxeTemp.GetComponent<Dart>();
                     currentDartScript.isForceOK = true;
+                    currentDartScript2.isForceOK = true;
 
                     //Load next dart
                     DartsInit();
@@ -83,17 +88,22 @@ public class DartController : MonoBehaviour
 
     void DartsInit()
     {
-        dartCounterLimit++;
+        endGameText.text = "";
+        //dartCounterLimit++;
         DartboardObj = GameObject.FindWithTag("dart_board").transform;
         if (DartboardObj)
         {
             isDartBoardSearched = true;
         }
-        //if (dartCounterLimit != DARTMAX)
-        StartCoroutine(WaitAndSpawnDart());
-        // else
-        // call Game Over
-        Debug.Log("End Game");
+        if (dartCounterLimit != DARTMAX)
+            StartCoroutine(WaitAndSpawnDart());
+        else
+        {
+            // call Game Over
+            endGameText.alpha = 1;
+            endGameText.text = "Run Out of Darts Plz Save and Exit";
+            Debug.Log("End Game");
+        }
     }
 
     public IEnumerator WaitAndSpawnDart()
@@ -115,12 +125,32 @@ public class DartController : MonoBehaviour
         // Create Prefab Default Empty and not parent imported 3D model to avoid AR camera Angle + Spawn Rotation headache calculation
         DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
         DartTemp.transform.parent = ARCam.transform;
+        DartTemp.SetActive(false);
 
-        if (DartTemp.TryGetComponent(out Rigidbody rigid))
-            rb = rigid;
+        AxeTemp = Instantiate(DartPrefab2, DartThrowPoint.position, ARCam.transform.localRotation);
+        AxeTemp.transform.parent = ARCam.transform;
+        AxeTemp.SetActive(false);
+
+        if (Score.Instance.ScoreCount >= 30)
+        {
+            AxeTemp.SetActive(true);
+
+            if (AxeTemp.TryGetComponent(out Rigidbody rigid))
+                rb = rigid;
+        }
+        else
+        {
+            DartTemp.SetActive(true);
+
+            if (DartTemp.TryGetComponent(out Rigidbody rigid))
+                rb = rigid;
+        }
 
         rb.isKinematic = true;
 
         SoundManager.Instance.play_dartReloadSound();
+
+        dartCounterLimit++;
+        dartCounterLeft.text = (DARTMAX - dartCounterLimit).ToString();
     }
 }

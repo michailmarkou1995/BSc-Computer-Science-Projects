@@ -31,7 +31,7 @@ public class Score : MonoBehaviour
         else
             Instance = this;
 
-        //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
+        //Set Score to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
     }
 
