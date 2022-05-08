@@ -29,10 +29,10 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener, IU
         if (Advertisement.isInitialized)
         {
             Debug.Log("Advertisment is initialzed");
-            //LoadAd();
+            LoadAd();
         }
-        //else
-            //InitializeAds();
+        else
+            InitializeAds();
     }
 
     public void InitializeAds()

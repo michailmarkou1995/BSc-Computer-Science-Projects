@@ -915,6 +915,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888544567086339362}
   - component: {fileID: 1275713532717494645}
+  - component: {fileID: 4190081011428968804}
   m_Layer: 0
   m_Name: DartboardPrefab
   m_TagString: dart_board
@@ -950,7 +951,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.2612969, y: 0.026442222, z: 0.2635414}
-  m_Center: {x: 0.009408712, y: 0.014657665, z: -0.02358067}
+  m_Center: {x: 0.009408712, y: 0.014, z: -0.02358067}
+--- !u!114 &4190081011428968804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943421204200904537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470afeb43e5b1f043b4a00316356c105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3643194496404021091
 GameObject:
   m_ObjectHideFlags: 0

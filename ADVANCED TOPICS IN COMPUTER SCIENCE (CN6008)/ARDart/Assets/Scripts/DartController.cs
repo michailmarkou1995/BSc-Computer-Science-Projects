@@ -131,7 +131,7 @@ public class DartController : MonoBehaviour
         AxeTemp.transform.parent = ARCam.transform;
         AxeTemp.SetActive(false);
 
-        if (Score.Instance.ScoreCount >= 30)
+        if (Score.Instance.ScoreCount >= 100)
         {
             AxeTemp.SetActive(true);
 
